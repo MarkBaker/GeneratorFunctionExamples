@@ -5,12 +5,15 @@ When working with arrays in PHP, three of the most useful functions available to
 However, they only work on PHP arrays; so if we are using Generators as a data source instead of an array, then we can't take advantage of the functionality that they provide. Fortunately, it's very easy to emulate that functionality and apply it to Generators (and other Traversable objects like SPL Iterators), giving us access to all of the flexibility and power that mapping, filtering and reducing can offer.
 
 
+Full working code examples demonstrating the functions used in this article are all available on [github](https://github.com/MarkBaker/GeneratorFunctionExamples).
+
+
 
 ## A real-world example of a Generator
 
 Rather than the rather simplistic example Generators that are normally shown in blog posts and tutorials, I prefer to use a real-world example. In this case, a handler for reading `.gpx` files. A [GPX](](http://www.topografix.com/gpx.asp) (or GPS exchange format) file is an XML file format for storing coordinate data. It can store waypoints, tracks, and routes; and is commonly used by the GPS trackers worn by hikers and joggers. Those of my cats that spend a lot of their time out of doors are equipped with miniaturised trackers so that I can subsequently read the files and see where they've been, and discover their "favourite" haunts so that I know where they're most likely to be when I need to go out searching for them.
 
-![Roman wearing his GPS Tracker](http://i.imgur.com/JASNYIm.png)
+![Roman wearing his GPS Tracker](https://raw.githubusercontent.com/MarkBaker/GeneratorFunctionExamples/master/images/Roman%20and%20GPS%20Tracker.png)
 
 __Roman wearing his GPS Tracker__
 
