@@ -2,7 +2,7 @@
 
 When working with arrays in PHP, three of the most useful functions available to us are [array_map()](http://php.net/manual/en/function.array-map.php), [array_filter()](http://php.net/manual/en/function.array-filter.php) and [array_reduce()](http://php.net/manual/en/function.array-reduce.php), which allow us to manipulate the value of array elements, select a subset of values from an array, or reduce an array to a single value; all using a callback function to determine exactly what logic should be applied. The use of a callback makes them extremely flexible, and these functions can be particularly powerful, especially when combined together.
 
-However, they only work on PHP arrays; so if we are using Generators as a data source instead of an array, then we can't take advantage of the functionality that they provide. Fortunately, it's very easy to emulate that functionality and apply it to Generators (and other Traversable objects like SPL Iterators), giving us access to all of the flexibility and power that mapping, filtering and reducing can offer.
+However, these functions only work with standard PHP arrays; so if we are using Generators as a data source instead of an array, then we can't take advantage of the functionality that they provide. Fortunately, it's very easy to emulate that functionality and apply it to Generators (and also to other Traversable objects like SPL Iterators), giving us access to all of the flexibility and power that mapping, filtering and reducing can offer.
 
 
 Full working code examples demonstrating the functions used in this article are all available on [github](https://github.com/MarkBaker/GeneratorFunctionExamples).
@@ -11,7 +11,7 @@ Full working code examples demonstrating the functions used in this article are 
 
 ## A real-world example of a Generator
 
-Rather than the rather simplistic example Generators that are normally shown in blog posts and tutorials, I prefer to use a real-world example. In this case, a handler for reading `.gpx` files. A [GPX](](http://www.topografix.com/gpx.asp) (or GPS exchange format) file is an XML file format for storing coordinate data. It can store waypoints, tracks, and routes; and is commonly used by the GPS trackers worn by hikers and joggers. Those of my cats that spend a lot of their time out of doors are equipped with miniaturised trackers so that I can subsequently read the files and see where they've been, and discover their "favourite" haunts so that I know where they're most likely to be when I need to go out searching for them.
+Rather than the rather simplistic example Generators that are normally shown in blog posts and tutorials, I prefer to use a real-world example. In this case, a handler for reading `.gpx` files. A [GPX](http://www.topografix.com/gpx.asp) (or GPS eXchange format) file is an XML file format for storing coordinate data. It can store waypoints, tracks, and routes; and is commonly used by the GPS trackers worn by hikers and joggers. Those of my cats that spend a lot of their time out of doors are equipped with miniaturised trackers so that I can subsequently read the files and see where they've been, and discover their "favourite" haunts so that I know where they're most likely to be when I need to go out searching for them.
 
 ![Roman wearing his GPS Tracker](https://raw.githubusercontent.com/MarkBaker/GeneratorFunctionExamples/master/images/Roman%20and%20GPS%20Tracker.png)
 
@@ -205,7 +205,10 @@ foreach (filter($gpxReader->getElements('trkpt'), $timeFilter, ARRAY_FILTER_USE_
 }
 ```
 
-While filtering the data by time is my most common activity; the flexibility of using a callback does allow me to filter the trackpoints by other criteria. Using the `filter()` function with different callbacks allows me to check if the cats have ventured beyond the confines of a defined bounding box of lat/long coordinates; whether they have travelled more than 2 kilometers from the house; or even simply when they were inside the house while I Was out at work.
+An alternative approach to filtering by time would is to filter so that only every 2nd 3rd or even 4th trackpoint is returned, giving me a broad overview of the the route without all the detail; and where I can then zoom in on particular timeframes of interest, returning every trackpoint within that timeframe.
+
+
+While filtering the data by time is my most common activity; the flexibility of using a callback does allow me to filter the trackpoints by other criteria. Using the `filter()` function with different callbacks allows me to check if the cats have ventured beyond the confines of a defined bounding box of lat/long coordinates; whether they have travelled more than 2 kilometers from the house; or even simply when they were inside the house while I was out at work.
 
 
 
@@ -221,7 +224,7 @@ function map(Callable $callback, Traversable $filter) {
 }
 ```
 
-Like `filter()`, the `map()` function is also a Generator; and like `filter()`, it takes on the responsibility of reading each entry in turn from the datasource Generator (the `Traversable`), and executing the callback (the `Callable`) which is responsible for the actual "mapping" of the values, before yielding the key/value back to the calling script.
+Like `filter()`, the `map()` function is also a Generator; and like `filter()`, it takes on the responsibility of reading each entry in turn from the datasource Generator (the `Traversable`), and executing the callback (the `Callable`) which is responsible for the actual "mapping" of the values, perhaps changing the actual structure of the value, or handling a change between WGS84 Latitude/Longitude to OSGB36 so that I can plot the route on Ordnance Survey maps which use that different [Geodetic Datum](https://en.wikipedia.org/wiki/Geodetic_datum), before yielding the key/value back to the calling script.
 
 In this case, I have a little helper class for calculating distance (using the Haversine formula).
 ```
@@ -283,7 +286,7 @@ The fact that `filter()` and `map()` are both Generators means that I can chain 
 
 ## Reducing the Data 
 
-When I plot the the journey on OpenStreetMap or Google Maps, then I want to know the coordinates for the bounding box to display; and with an array I could use the [array_reduce()](http://php.net/manual/en/function.array-reduce.php) function () with a callback that works out the top and bottom latitudes, and the left and right longitudes for my bounding box. With the aid of a `reduce()` function, I can do something similar with the Generator.
+When I plot the journey on OpenStreetMap or Google Maps, then I want to know the coordinates for the initial bounding box to display; and with an array I could use the [array_reduce()](http://php.net/manual/en/function.array-reduce.php) function () with a callback that works out the top and bottom latitudes, and the left and right longitudes for my bounding box. With the aid of a `reduce()` function, I can do something similar with the Generator.
 
 ```
 function reduce(Traversable $filter, Callable $callback, $initial = null) {
@@ -342,7 +345,7 @@ Top: 54.5192 Bottom: 54.4338
 Left: -3.0451 Right: -2.9628
 ```
 
-Other callbacks that I use on a regular basis, such as the one for calculating distance travelled do use the carry argument to maintain the running total as it iterates through the Generator values.
+Other callbacks that I use on a regular basis with reduce(), such as the one described below for calculating distance travelled do use the carry argument to maintain the running total as it iterates through the Generator values.
 
 It's always nice to know how far may cats have travelled on their daily journeys (or that I've walked when I go out hiking), and again I use my `reduce()` function - combined with the mapper to add the distance between trackpoints - to calculate the total distance travelled. As long as I've used the mapper to add a distance property to the trackpoint data, I can then use `reduce()` with a callback that simply sums all those distance properties to give a total distance; but the order of the calls is important.
 
@@ -370,6 +373,11 @@ and running the code will give
 ```
 Total distance travelled is 19.27 km
 ```
+
+![Plot of the Example GPX Data on Google Maps](https://raw.githubusercontent.com/MarkBaker/GeneratorFunctionExamples/master/images/GpxTrackData1.png)
+
+__Plot of the Example GPX Data on Google Maps__
+
 
 I hasten to add that the sample data I've used with these examples isn't from any of my cats, but from a walk in the Lake District. Roman might have ranged 20km overnight in his younger days, but he's a "middle-aged" cat now and only manages about 8km in a typical day.
 
@@ -399,3 +407,6 @@ foreach (column($gpxReader->getElements('trkpt'), 'elevation') as $key => $value
     echo $key, ' => ', $value, PHP_EOL;
 }
 ```
+
+## Summary
+
