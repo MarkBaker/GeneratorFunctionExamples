@@ -224,6 +224,8 @@ function map(Callable $callback, Traversable $filter) {
 }
 ```
 
+Strictly speaking, the `array_map()` function accepts multiple array arguments, and passes the elements from all of them the through to the callback function to be processed "in parallel". I've kept my own `map()` implementation simple, working with only a single Traversable, but it should be fairly straightforward for anybody to modify it should they so wish; and this would be even easier using PHP version 5.6 variadics.
+
 Like `filter()`, the `map()` function is also a Generator; and like `filter()`, it takes on the responsibility of reading each entry in turn from the datasource Generator (the `Traversable`), and executing the callback (the `Callable`) which is responsible for the actual "mapping" of the values, perhaps changing the actual structure of the value, or handling a change between WGS84 Latitude/Longitude to OSGB36 so that I can plot the route on Ordnance Survey maps which use that different [Geodetic Datum](https://en.wikipedia.org/wiki/Geodetic_datum), before yielding the key/value back to the calling script.
 
 In this case, I have a little helper class for calculating distance (using the Haversine formula).
