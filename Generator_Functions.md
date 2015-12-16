@@ -410,3 +410,9 @@ foreach (column($gpxReader->getElements('trkpt'), 'elevation') as $key => $value
 
 ## Summary
 
+The map/filter/reduce pattern is one of the cornerstones of functional programming, and a useful feature that we can apply when working with arrays of data in PHP. Hopefully this article has shown how we can apply it to Generators with just a few simple functions; and demonstrated the power and flexibility of the pattern for more general use in our code, whether with Generators, or using the existing functions for arrays.
+
+---
+
+No cats were forced to walk anywhere that they didn't want to go during the writing of this article.
+  
