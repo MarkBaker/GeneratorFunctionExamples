@@ -1,4 +1,4 @@
-# A Functional Approach to Cat Herding with PHP Generators
+# A Functional Guide to Cat Herding with PHP Generators
 
 When working with arrays in PHP, three of the most useful functions available to us are [array_map()](http://php.net/manual/en/function.array-map.php), [array_filter()](http://php.net/manual/en/function.array-filter.php) and [array_reduce()](http://php.net/manual/en/function.array-reduce.php), which allow us to manipulate the value of array elements, select a subset of values from an array, or reduce an array to a single value; all using a callback function to determine exactly what logic should be applied. The use of a callback makes them extremely flexible, and these functions can be particularly powerful, especially when combined together.
 
@@ -224,7 +224,7 @@ function map(Callable $callback, Traversable $filter) {
 }
 ```
 
-Strictly speaking, the `array_map()` function accepts multiple array arguments, and passes the elements from all of them the through to the callback function to be processed "in parallel". I've kept my own `map()` implementation simple, working with only a single Traversable, but it should be fairly straightforward for anybody to modify it should they so wish; and this would be even easier using PHP version 5.6 variadics.
+Strictly speaking, the `array_map()` function accepts multiple array arguments, and passes the elements from all of them the through to the callback function, to be processed "in parallel". I've kept my own `map()` implementation simple, working with only a single Traversable, but it should be fairly straightforward for anybody to modify it should they so wish; and this would be even easier using PHP version 5.6 variadics.
 
 Like `filter()`, the `map()` function is also a Generator; and like `filter()`, it takes on the responsibility of reading each entry in turn from the datasource Generator (the `Traversable`), and executing the callback (the `Callable`) which is responsible for the actual "mapping" of the values, perhaps changing the actual structure of the value, or handling a change between WGS84 Latitude/Longitude to OSGB36 so that I can plot the route on Ordnance Survey maps which use that different [Geodetic Datum](https://en.wikipedia.org/wiki/Geodetic_datum), before yielding the key/value back to the calling script.
 
