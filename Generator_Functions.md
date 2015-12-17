@@ -217,8 +217,8 @@ While filtering the data by time is my most common activity; the flexibility of 
 One thing that a gpx file doesn't record is the distance between successive trackpoints, so I use a `map()` function to add this new property to the Generator returned value object. This is the equivalent of PHP's [array_map()](http://php.net/manual/en/function.array-map.php) function.
 
 ```
-function map(Callable $callback, Traversable $filter) {
-    foreach ($filter as $key => $value) {
+function map(Callable $callback, Traversable $iterator) {
+    foreach ($iterator as $key => $value) {
         yield $key => $callback($value);
     }
 }
@@ -291,9 +291,9 @@ The fact that `filter()` and `map()` are both Generators means that I can chain 
 When I plot the journey on OpenStreetMap or Google Maps, then I want to know the coordinates for the initial bounding box to display; and with an array I could use the [array_reduce()](http://php.net/manual/en/function.array-reduce.php) function () with a callback that works out the top and bottom latitudes, and the left and right longitudes for my bounding box. With the aid of a `reduce()` function, I can do something similar with the Generator.
 
 ```
-function reduce(Traversable $filter, Callable $callback, $initial = null) {
+function reduce(Traversable $iterator, Callable $callback, $initial = null) {
     $result = $initial;
-    foreach($filter as $value) {
+    foreach($iterator as $value) {
         $result = $callback($result, $value);
     }
     return $result;

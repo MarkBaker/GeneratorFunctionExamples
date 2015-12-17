@@ -1,7 +1,7 @@
 <?php
 
-function map(Callable $callback, Traversable $filter) {
-    foreach ($filter as $key => $value) {
+function map(Callable $callback, Traversable $iterator) {
+    foreach ($iterator as $key => $value) {
         yield $key => $callback($value);
     }
 }
