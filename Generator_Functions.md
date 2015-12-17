@@ -224,8 +224,6 @@ function map(Callable $callback, Traversable $iterator) {
 }
 ```
 
-Strictly speaking, the `array_map()` function accepts multiple array arguments, and passes the elements from all of them the through to the callback function, to be processed "in parallel". I've kept my own `map()` implementation simple, working with only a single Traversable, but it should be fairly straightforward for anybody to modify it should they so wish; and this would be even easier using PHP version 5.6 variadics.
-
 Like `filter()`, the `map()` function is also a Generator; and like `filter()`, it takes on the responsibility of reading each entry in turn from the datasource Generator (the `Traversable`), and executing the callback (the `Callable`) which is responsible for the actual "mapping" of the values, perhaps changing the actual structure of the value, or handling a change between WGS84 Latitude/Longitude to OSGB36 so that I can plot the route on Ordnance Survey maps which use that different [Geodetic Datum](https://en.wikipedia.org/wiki/Geodetic_datum), before yielding the key/value back to the calling script.
 
 In this case, I have a little helper class for calculating distance (using the Haversine formula).
@@ -285,6 +283,21 @@ While this simple mapping callback doesn't provide much direct value in itself, 
 
 The fact that `filter()` and `map()` are both Generators means that I can chain them together, even combining several different filters and mappers in to a long chain where necessary.
 
+
+Strictly speaking, PHP's `array_map()` function accepts multiple array arguments, and passes the elements from all of them the through to the callback function, to be processed "in parallel". I've kept my own `map()` implementation simple, working with only a single Traversable; but I also have a variant `mmap()` function (using SPL's MultipleIterator class) that accepts one or more Traversable arguments. This particular implementation also uses variadics, so it does require a minimum version 5.6 of PHP.
+
+```
+function mmap(Callable $callback, ...$iterators) {
+    $mi = new MultipleIterator(MultipleIterator::MIT_NEED_ANY);
+    foreach($iterators as $iterator) {
+        $mi->attachIterator($iterator);
+    }
+
+    foreach($mi as $values) {
+        yield $callback(...$values);
+    }
+}
+```
 
 ## Reducing the Data 
 
