@@ -1,6 +1,6 @@
 # A Functional Guide to Cat Herding with PHP Generators
 
-When working with arrays in PHP, three of the most useful functions available to us are [array_map()](http://php.net/manual/en/function.array-map.php), [array_filter()](http://php.net/manual/en/function.array-filter.php) and [array_reduce()](http://php.net/manual/en/function.array-reduce.php), which allow us to manipulate the value of array elements, select a subset of values from an array, or reduce an array to a single value; all using a callback function to determine exactly what logic should be applied. The use of a callback makes them extremely flexible, and these functions can be particularly powerful, especially when combined together.
+When working with arrays in PHP, three of the most useful functions available to us are [array_map()](http://php.net/manual/en/function.array-map.php), [array_filter()](http://php.net/manual/en/function.array-filter.php) and [array_reduce()](http://php.net/manual/en/function.array-reduce.php), which allow us to walk an array and manipulate the value of array elements, select a subset of values from an array, or reduce an array to a single value; all using a callback function to determine exactly what logic should be applied. The use of the callback makes them extremely flexible, and these functions can be particularly powerful, especially when combined (or chained) together.
 
 However, these functions only work with standard PHP arrays; so if we are using Generators as a data source instead of an array, then we can't take advantage of the functionality that they provide. Fortunately, it's very easy to emulate that functionality and apply it to Generators (and also to other Traversable objects like SPL Iterators), giving us access to all of the flexibility and power that mapping, filtering and reducing can offer.
 
@@ -11,7 +11,7 @@ Full working code examples demonstrating the functions used in this article are 
 
 ## A real-world example of a Generator
 
-Rather than the rather simplistic example Generators that are normally shown in blog posts and tutorials, I prefer to use a real-world example. In this case, a handler for reading `.gpx` files. A [GPX](http://www.topografix.com/gpx.asp) (or GPS eXchange format) file is an XML file format for storing coordinate data. It can store waypoints, tracks, and routes; and is commonly used by the GPS trackers worn by hikers and joggers. Those of my cats that spend a lot of their time out of doors are equipped with miniaturised trackers so that I can subsequently read the files and see where they've been, and discover their "favourite" haunts so that I know where they're most likely to be when I need to go out searching for them.
+Rather than the usual simplistic example Generators that are normally shown in blog posts and tutorials, I prefer to use a real-world example. In this case, a handler for reading `.gpx` files. A [GPX](http://www.topografix.com/gpx.asp) (or GPS eXchange format) file is an XML file format for storing coordinate data. It can store waypoints, tracks, and routes; and is commonly used by the GPS trackers worn by hikers and joggers. Those of my cats that spend a lot of their time out of doors are equipped with miniaturised trackers so that I can subsequently read the files and see where they've been, and discover their "favourite" haunts so that I know where they're most likely to be when I need to go out searching for them.
 
 ![Roman wearing his GPS Tracker](https://raw.githubusercontent.com/MarkBaker/GeneratorFunctionExamples/master/images/Roman%20and%20GPS%20Tracker.png)
 
@@ -26,19 +26,19 @@ creator="Memory-Map 5.4.2.1089 http://www.memory-map.com"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="http://www.topografix.com/GPX/1/1"
     xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
-<trk>
-<name>Wythburn</name>
-<type>Track</type>
-<trkseg>
-<trkpt lat="54.5131924947" lon="-3.0448236664"><time>2015-03-02T07:59:35Z</time></trkpt>
-<trkpt lat="54.5131921768" lon="-3.0450893323"><time>2015-03-02T08:00:31Z</time></trkpt>
-<trkpt lat="54.5131534894" lon="-3.0448548317"><ele>192</ele><time>2015-03-02T08:00:51Z</time></trkpt>
+    <trk>
+        <name>Wythburn</name>
+        <type>Track</type>
+        <trkseg>
+            <trkpt lat="54.5131924947" lon="-3.0448236664"><time>2015-03-02T07:59:35Z</time></trkpt>
+            <trkpt lat="54.5131921768" lon="-3.0450893323"><time>2015-03-02T08:00:31Z</time></trkpt>
+            <trkpt lat="54.5131534894" lon="-3.0448548317"><ele>192</ele><time>2015-03-02T08:00:51Z</time></trkpt>
 
 ...
 
-<trkpt lat="54.4399968465" lon="-2.9721705119"><ele>52</ele><time>2015-03-02T14:50:49Z</time></trkpt>
-</trkseg>
-</trk>
+            <trkpt lat="54.4399968465" lon="-2.9721705119"><ele>52</ele><time>2015-03-02T14:50:49Z</time></trkpt>
+        </trkseg>
+    </trk>
 </gpx>
 ```
 
@@ -74,7 +74,7 @@ class GpxHandler {
     }
 }
 ```
-(Attribute and child parsers/formatters are stripped from the code above to keep it brief.)
+*(Attribute and child parsers/formatters are stripped from the code above to keep it brief.)*
 
 This Generator returns a `DateTime` object containing the timestamp value as the key, and a simple object with latitude, longitude and elevation properties as the value.
 
@@ -205,7 +205,7 @@ foreach (filter($gpxReader->getElements('trkpt'), $timeFilter, ARRAY_FILTER_USE_
 }
 ```
 
-An alternative approach to filtering by time would is to filter so that only every 2nd 3rd or even 4th trackpoint is returned, giving me a broad overview of the the route without all the detail; and where I can then zoom in on particular timeframes of interest, returning every trackpoint within that timeframe.
+An alternative approach to filtering by time is to filter so that only every 2nd 3rd or even 4th trackpoint is returned, giving me a broad overview of the the route without all the detail; and where I can then zoom in on particular timeframes of interest, returning every trackpoint within that timeframe.
 
 
 While filtering the data by time is my most common activity; the flexibility of using a callback does allow me to filter the trackpoints by other criteria. Using the `filter()` function with different callbacks allows me to check if the cats have ventured beyond the confines of a defined bounding box of lat/long coordinates; whether they have travelled more than 2 kilometers from the house; or even simply when they were inside the house while I was out at work.
@@ -237,7 +237,7 @@ class DistanceCalculator {
     }
 }
 ```
-(The actual distance calculation is stripped from the code above to keep it brief.)
+*(The actual distance calculation is stripped from the code above to keep it brief.)*
 
 Calling the mapper then is as simple as
 
@@ -245,7 +245,7 @@ Calling the mapper then is as simple as
 $gpxReader = new GpxReader\GpxHandler($gpxFilename);
 $distanceCalculator = new GpxReader\Helpers\DistanceCalculator();
 
-foreach (map( [$distanceCalculator, 'setDistance'], $gpxReader->getElements('trkpt')) as $time => $element) {
+foreach (map([$distanceCalculator, 'setDistance'], $gpxReader->getElements('trkpt')) as $time => $element) {
     printf(
         '%s' . PHP_EOL . '    latitude: %7.4f longitude: %7.4f elevation: %d' . PHP_EOL .
             '    distance from previous point:  %5.2f m' . PHP_EOL,
@@ -369,7 +369,7 @@ $gpxReader = new GpxReader\GpxHandler($gpxFilename);
 $distanceCalculator = new GpxReader\Helpers\DistanceCalculator();
 
 $totalDistance = reduce(
-    map( [$distanceCalculator, 'setDistance'], $gpxReader->getElements('trkpt')),
+    map([$distanceCalculator, 'setDistance'], $gpxReader->getElements('trkpt')),
     function($runningTotal, $value) {
         $runningTotal += $value->distance;
         return $runningTotal;
