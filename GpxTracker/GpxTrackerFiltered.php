@@ -8,6 +8,7 @@ include __DIR__ . '/classes/Bootstrap.php';
 include __DIR__ . '/functions/filter.php';
 
 
+// Create our initial Generator to read the gpx file
 $gpxFilename = __DIR__ . '/data/GpxTrackData1.gpx';
 $gpxReader = new GpxReader\GpxHandler($gpxFilename);
 

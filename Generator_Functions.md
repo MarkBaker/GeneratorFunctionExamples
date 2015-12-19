@@ -82,8 +82,10 @@ This Generator returns a `DateTime` object containing the timestamp value as the
 As a demonstration of this basic Generator:
 
 ```
+// Create our initial Generator to read the gpx file
 $gpxReader = new GpxReader\GpxHandler($gpxFilename);
 
+// Iterate over the trackpoint set from the gpx file, displaying each point detail in turn
 foreach ($gpxReader->getElements('trkpt') as $time => $element) {
     printf(
         '%s' . PHP_EOL . '    latitude: %7.4f longitude: %7.4f elevation: %d' . PHP_EOL,
@@ -184,16 +186,18 @@ This was a particularly useful change, allowing me the option of filtering on th
 Checking where the cats were at a certain time is as easy as implementing a callback that checks the timestamp, returning a true/false if it does/doesn't fall within the specified date/time range.
 
 ```
+// Create our initial Generator to read the gpx file
 $gpxReader = new GpxReader\GpxHandler($gpxFilename);
 
-// Set the filter parameters
+// Define the date/time filter parameters
 $startTime = new \DateTime('2015-03-02 13:20:00Z');
 $endTime = new \DateTime('2015-03-02 13:30:00Z');
-// Create the filter callback
+// Create the filter callback with the date/time parameters we've just defined
 $timeFilter = function($timestamp) use ($startTime, $endTime) {
     return $timestamp >= $startTime && $timestamp <= $endTime;
 };
 
+// Iterate over the trackpoint set from the gpx file, displaying each point detail in turn
 foreach (filter($gpxReader->getElements('trkpt'), $timeFilter, ARRAY_FILTER_USE_KEY) as $time => $element) {
     printf(
         '%s' . PHP_EOL . '    latitude: %7.4f longitude: %7.4f elevation: %d' . PHP_EOL,
@@ -242,9 +246,13 @@ class DistanceCalculator {
 Calling the mapper then is as simple as
 
 ```
+// Create our initial Generator to read the gpx file
 $gpxReader = new GpxReader\GpxHandler($gpxFilename);
+
+// Set the mapper to calculate the distance between a trackpoint and the previous trackpoint
 $distanceCalculator = new GpxReader\Helpers\DistanceCalculator();
 
+// Iterate over the trackpoint set from the gpx file, mapping the distances as we go, displaying each point detail in turn
 foreach (map([$distanceCalculator, 'setDistance'], $gpxReader->getElements('trkpt')) as $time => $element) {
     printf(
         '%s' . PHP_EOL . '    latitude: %7.4f longitude: %7.4f elevation: %d' . PHP_EOL .
@@ -335,14 +343,18 @@ As the values for the top, bottom, left and right properties of the bounding box
 I run the bounding box check using the code shown below
 
 ```
+// Create our initial Generator to read the gpx file
 $gpxReader = new GpxReader\GpxHandler($gpxFilename);
-$boundaries = new GpxReader\Helpers\BoundingBox();
 
+// Set our bounding box callback
+$boundaries = new GpxReader\Helpers\BoundingBox();
+// Reduce our trackpoint set from the gpx file against the bounding box callback
 $boundingBox = reduce(
     $gpxReader->getElements('trkpt'),
     [$boundaries, 'calculate']
 );
 
+// Display the results of our reduce
 printf(
     'Top: %7.4f Bottom: %7.4f' . PHP_EOL .
         'Left: %7.4f Right: %7.4f' . PHP_EOL,
@@ -365,9 +377,13 @@ Other callbacks that I use on a regular basis with reduce(), such as the one des
 It's always nice to know how far may cats have travelled on their daily journeys (or that I've walked when I go out hiking), and again I use my `reduce()` function - combined with the mapper to add the distance between trackpoints - to calculate the total distance travelled. As long as I've used the mapper to add a distance property to the trackpoint data, I can then use `reduce()` with a callback that simply sums all those distance properties to give a total distance; but the order of the calls is important.
 
 ```
+// Create our initial Generator to read the gpx file
 $gpxReader = new GpxReader\GpxHandler($gpxFilename);
+
+// Set the mapper to calculate the distance between a trackpoint and the previous trackpoint
 $distanceCalculator = new GpxReader\Helpers\DistanceCalculator();
 
+// Reduce our trackpoint set from the gpx file (mapping the distance as we go) and summing the results to calculate the total distance travelled
 $totalDistance = reduce(
     map([$distanceCalculator, 'setDistance'], $gpxReader->getElements('trkpt')),
     function($runningTotal, $value) {
@@ -377,6 +393,7 @@ $totalDistance = reduce(
     0.0
 );
 
+// Display the results of our reduce
 printf(
     'Total distance travelled is %5.2f km' . PHP_EOL,
     $totalDistance / 1000
@@ -418,6 +435,11 @@ The code logic here specifically works with objects as the yielded value, and do
 So to retrieve only the elevation property from my Generator, I can use
 
 ```
+// Create our initial Generator to read the gpx file
+$gpxReader = new GpxReader\GpxHandler($gpxFilename);
+
+
+// Iterate over the trackpoint set from the gpx file, extracting only the elevation property to display
 foreach (column($gpxReader->getElements('trkpt'), 'elevation') as $key => $value) {
     echo $key, ' => ', $value, PHP_EOL;
 }

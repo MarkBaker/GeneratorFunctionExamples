@@ -15,7 +15,7 @@ $gpxReader = new GpxReader\GpxHandler($gpxFilename);
 // Set the mapper to calculate the distance between a trackpoint and the previous trackpoint
 $distanceCalculator = new GpxReader\Helpers\DistanceCalculator();
 
-// Iterate over the trackpoint set from the gpx file, displaying each point detail in turn
+// Iterate over the trackpoint set from the gpx file, mapping the distances as we go, displaying each point detail in turn
 foreach (map( [$distanceCalculator, 'setDistance'], $gpxReader->getElements('trkpt')) as $time => $element) {
     printf(
         '%s' . PHP_EOL . '    latitude: %7.4f longitude: %7.4f elevation: %d' . PHP_EOL .
