@@ -76,7 +76,7 @@ class GpxHandler {
 ```
 *(Attribute and child parsers/formatters are stripped from the code above to keep it brief.)*
 
-This Generator returns a `DateTime` object containing the timestamp value as the key, and a simple object with latitude, longitude and elevation properties as the value.
+This Generator yields a key/value pair, with a custom object with latitude, longitude and elevation properties as the value, and a `DateTime` object containing the timestamp value for the trackpoint as the key.
 
 
 As a demonstration of this basic Generator:
