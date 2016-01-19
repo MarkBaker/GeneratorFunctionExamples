@@ -209,7 +209,7 @@ foreach (filter($gpxReader->getElements('trkpt'), $timeFilter, ARRAY_FILTER_USE_
 }
 ```
 
-An alternative approach to filtering by time is to filter so that only every 2nd 3rd or even 4th trackpoint is returned, giving me a broad overview of the the route without all the detail; and where I can then zoom in on particular timeframes of interest, returning every trackpoint within that timeframe.
+An alternative approach to filtering by time is to filter so that only every 2nd 3rd or even 4th trackpoint is returned, giving me a broad overview of the route without all the detail; and where I can then zoom in on particular timeframes of interest, returning every trackpoint within that timeframe.
 
 
 While filtering the data by time is my most common activity; the flexibility of using a callback does allow me to filter the trackpoints by other criteria. Using the `filter()` function with different callbacks allows me to check if the cats have ventured beyond the confines of a defined bounding box of lat/long coordinates; whether they have travelled more than 2 kilometers from the house; or even simply when they were inside the house while I was out at work.
