@@ -1,6 +1,6 @@
 <?php
 
-function isEmpty($value) {
+function notEmpty($value) {
     return !empty($value);
 }
 
@@ -10,7 +10,7 @@ function isEmpty($value) {
  **/
 function filter(Traversable $filter, Callable $callback = null, $flag = 0) {
     if ($callback === null) {
-        $callback = 'isEmpty';
+        $callback = 'notEmpty';
     }
 
     foreach ($filter as $key => $value) {

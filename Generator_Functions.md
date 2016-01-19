@@ -122,7 +122,7 @@ This can generate a lot of data (a typical file will contain several thousands o
 When I first started using Generators with PHP 5.5, my `filter()` function looked something like:
 
 ```
-function isEmpty($value) {
+function notEmpty($value) {
     return !empty($value);
 }
 
@@ -133,7 +133,7 @@ function isEmpty($value) {
  **/
 function filter(Traversable $filter, Callable $callback = null) {
     if ($callback === null) {
-        $callback = 'isEmpty';
+        $callback = 'notEmpty';
     }
 
     foreach ($filter as $key => $value) {
@@ -156,7 +156,7 @@ PHP 5.6.0 added a new `$flag` option to `array_filter()`, and I subsequently rev
  **/
 function filter(Traversable $filter, Callable $callback = null, $flag = 0) {
     if ($callback === null) {
-        $callback = 'isEmpty';
+        $callback = 'notEmpty';
     }
 
     foreach ($filter as $key => $value) {

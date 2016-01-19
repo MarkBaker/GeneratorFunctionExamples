@@ -1,6 +1,6 @@
 <?php
 
-function isEmpty($value) {
+function notEmpty($value) {
     return !empty($value);
 }
 
