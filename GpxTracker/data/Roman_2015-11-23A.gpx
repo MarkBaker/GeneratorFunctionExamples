@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gpx>
+  <trk>
+    <name>Roman 2015-11-23</name>
+    <trkseg>
+      <trkpt lat=" 53.54411000" lon="-2.7416270000">
+        <ele>124.400</ele>
+        <time>2015-11-23T13:24:40Z</time>
+      </trkpt>
+      <trkpt lat=" 53.54412200" lon="-2.7416280000">
+        <ele>122.300</ele>
+        <time>2015-11-23T13:24:49Z</time>
+      </trkpt>
+      <trkpt lat=" 53.54411500" lon="-2.7416490000">
+        <ele>120.900</ele>
+        <time>2015-11-23T13:24:59Z</time>
+      </trkpt>
+      <trkpt lat=" 53.54411600" lon="-2.7416770000">
+        <ele>120.800</ele>
+        <time>2015-11-23T13:25:09Z</time>
+      </trkpt>
+      <trkpt lat=" 53.54407600" lon="-2.7416910000">
+        <ele>121.200</ele>
+        <time>2015-11-23T13:25:19Z</time>
+      </trkpt>
+      <trkpt lat=" 53.54407400" lon="-2.7416870000">
+        <ele>120.400</ele>
+        <time>2015-11-23T13:25:29Z</time>
+      </trkpt>
+      <trkpt lat=" 53.54407600" lon="-2.7416860000">
+        <ele>120.200</ele>
+        <time>2015-11-23T13:25:39Z</time>
+      </trkpt>
+      <trkpt lat=" 53.54416900" lon="-2.7416620000">
+        <ele>111.000</ele>
+        <time>2015-11-23T13:26:56Z</time>
+      </trkpt>
+      <trkpt lat=" 53.54417200" lon="-2.7416430000">
+        <ele>112.400</ele>
+        <time>2015-11-23T13:27:04Z</time>
+      </trkpt>
+      <trkpt lat=" 53.54417600" lon="-2.7416110000">
+        <ele>114.800</ele>
+        <time>2015-11-23T13:27:14Z</time>
+      </trkpt>
+      <trkpt lat=" 53.54417100" lon="-2.7416170000">
+        <ele>115.600</ele>
+        <time>2015-11-23T13:27:25Z</time>
+      </trkpt>
+      <trkpt lat=" 53.54416600" lon="-2.7416170000">
+        <ele>117.100</ele>
+        <time>2015-11-23T13:27:34Z</time>
+      </trkpt>
+      <trkpt lat=" 53.54414800" lon="-2.7416200000">
+        <ele>117.900</ele>
+        <time>2015-11-23T13:27:44Z</time>
+      </trkpt>
+      <trkpt lat=" 53.54415600" lon="-2.7416340000">
+        <ele>115.100</ele>
+        <time>2015-11-23T13:27:55Z</time>
+      </trkpt>
+      <trkpt lat=" 53.54414200" lon="-2.7416400000">
+        <ele>114.800</ele>
+        <time>2015-11-23T13:28:04Z</time>
+      </trkpt>
+      <trkpt lat=" 53.54413600" lon="-2.7416340000">
+        <ele>116.400</ele>
+        <time>2015-11-23T13:28:14Z</time>
+      </trkpt>
+      <trkpt lat=" 53.54413200" lon="-2.7416240000">
+        <ele>118.200</ele>
+        <time>2015-11-23T13:28:25Z</time>
+      </trkpt>
+      <trkpt lat=" 53.54413100" lon="-2.7416060000">
+        <ele>119.500</ele>
+        <time>2015-11-23T13:28:34Z</time>
+      </trkpt>
+      <trkpt lat=" 53.54413700" lon="-2.7415960000">
+        <ele>119.800</ele>
+        <time>2015-11-23T13:28:44Z</time>
+      </trkpt>
+      <trkpt lat=" 53.54414000" lon="-2.7415790000">
+        <ele>120.300</ele>
+        <time>2015-11-23T13:28:55Z</time>
+      </trkpt>
+      <trkpt lat=" 53.54412100" lon="-2.7415710000">
+        <ele>122.400</ele>
+        <time>2015-11-23T13:29:04Z</time>
+      </trkpt>
+      <trkpt lat=" 53.54410200" lon="-2.7415060000">
+        <ele>121.600</ele>
+        <time>2015-11-23T13:29:15Z</time>
+      </trkpt>
+      <trkpt lat=" 53.54411600" lon="-2.7415520000">
+        <ele>122.600</ele>
+        <time>2015-11-23T13:29:25Z</time>
+      </trkpt>
+      <trkpt lat=" 53.54407000" lon="-2.7414100000">
+        <ele>121.100</ele>
+        <time>2015-11-23T13:29:35Z</time>
+      </trkpt>
+      <trkpt lat=" 53.54413900" lon="-2.7414070000">
+        <ele>122.100</ele>
+        <time>2015-11-23T13:29:45Z</time>
+      </trkpt>
+      <trkpt lat=" 53.54422400" lon="-2.7413280000">
+        <ele>123.200</ele>
+        <time>2015-11-23T13:29:55Z</time>
+      </trkpt>
+    </trkseg>
+  </trk>
+</gpx>

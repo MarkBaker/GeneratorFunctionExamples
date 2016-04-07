@@ -10,7 +10,7 @@ include __DIR__ . '/functions/column.php';
 
 
 // Create our initial Generator to read the gpx file
-$gpxFilename = __DIR__ . '/data/GpxTrackData1.gpx';
+$gpxFilename = __DIR__ . '/data/Roman_2015-11-23.gpx';
 $gpxReader = new GpxReader\GpxHandler($gpxFilename);
 
 // Set the mapper to calculate the distance between a trackpoint and the previous trackpoint

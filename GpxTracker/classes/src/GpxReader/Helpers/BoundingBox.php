@@ -69,7 +69,7 @@ class BoundingBox {
     }
 
     /**
-     * Calculate the top-,bottom-,left- and right-most most bounds of all points
+     * Calculate the top-, bottom-, left- and right-most most bounds of all points
      *
      *  @param   BoundingBox            $discard  $this gets passed back in to itself by the reduce logic, but as all the
      *                                                 bounding data is maintained here in properties anyway, we don't need

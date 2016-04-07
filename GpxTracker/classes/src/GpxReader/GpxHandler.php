@@ -44,7 +44,7 @@ class GpxHandler {
     /**
      *  Read the attributes of the current element, and restructure them into a GpxLatLong object
      *
-     *  @param   \XMLReader  $xmlReader  The XMLReader pointing to the current element whose attributes we want to reformat as an object
+     *  @param   \XMLReader  $xmlReader  The XMLReader object pointing to the current element whose attributes we want to reformat as an object
      *  @return  \GpxReader\GpxLatLong
      **/
     protected function readAttributes(\XMLReader $xmlReader) {

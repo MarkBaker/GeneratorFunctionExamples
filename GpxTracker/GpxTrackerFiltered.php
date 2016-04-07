@@ -9,13 +9,13 @@ include __DIR__ . '/functions/filter.php';
 
 
 // Create our initial Generator to read the gpx file
-$gpxFilename = __DIR__ . '/data/GpxTrackData1.gpx';
+$gpxFilename = __DIR__ . '/data/Roman_2015-11-23.gpx';
 $gpxReader = new GpxReader\GpxHandler($gpxFilename);
 
 
 // Define the date/time filter parameters
-$startTime = new DateTime('2015-03-02 13:20:00Z');
-$endTime = new DateTime('2015-03-02 13:30:00Z');
+$startTime = new DateTime('2015-11-23 13:20:00Z');
+$endTime = new DateTime('2015-11-23 13:30:00Z');
 // Create the filter callback with the date/time parameters we've just defined
 $timeFilter = function($timestamp) use ($startTime, $endTime) {
     return $timestamp >= $startTime && $timestamp <= $endTime;
@@ -23,7 +23,8 @@ $timeFilter = function($timestamp) use ($startTime, $endTime) {
 
 
 // Iterate over the trackpoint set from the gpx file, displaying each point detail in turn
-foreach (filter($gpxReader->getElements('trkpt'), $timeFilter, ARRAY_FILTER_USE_KEY) as $time => $element) {
+foreach (filter($gpxReader->getElements('trkpt'), $timeFilter, ARRAY_FILTER_USE_KEY)
+         as $time => $element) {
     printf(
         '%s' . PHP_EOL . '    latitude: %7.4f longitude: %7.4f elevation: %d' . PHP_EOL,
         $time->format('Y-m-d H:i:s'),

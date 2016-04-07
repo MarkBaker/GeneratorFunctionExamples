@@ -2,5 +2,7 @@
 
 include_once __DIR__ . '/Autoloader.php';
 
-\GpxReader\Autoloader::register();
+
+(new \GpxTrackerExamples\Autoloader)->register('GpxReader');
+(new \GpxTrackerExamples\Autoloader)->register('GeneratorHelper');
 

@@ -8,7 +8,7 @@ include __DIR__ . '/classes/Bootstrap.php';
 include __DIR__ . '/functions/map.php';
 
 // Create our initial Generator to read the gpx file
-$gpxFilename = __DIR__ . '/data/GpxTrackData1.gpx';
+$gpxFilename = __DIR__ . '/data/Roman_2015-11-23.gpx';
 $gpxReader = new GpxReader\GpxHandler($gpxFilename);
 
 

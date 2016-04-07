@@ -9,7 +9,7 @@ include __DIR__ . '/functions/reduce.php';
 
 
 // Create our initial Generator to read the gpx file
-$gpxFilename = __DIR__ . '/data/GpxTrackData1.gpx';
+$gpxFilename = __DIR__ . '/data/Roman_2015-11-23.gpx';
 $gpxReader = new GpxReader\GpxHandler($gpxFilename);
 
 // Set our bounding box callback
