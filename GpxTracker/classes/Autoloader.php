@@ -42,14 +42,14 @@ class Autoloader
 	 * @return   boolean|null    false if the class hasn't been autoloaded, null if it has
      */
     public function load($className) {
-        if ((class_exists($className, false)) || (strpos($className, $this->namespace . '\\') !== 0)) {
+        if ((class_exists($className, false))) {
             // Either already loaded, or not a GpxReader class request
             return false;
         }
 
-        $classFilePath = __DIR__ . DIRECTORY_SEPARATOR .
+        $classFilePath = str_replace("\\",DIRECTORY_SEPARATOR, __DIR__ . DIRECTORY_SEPARATOR .
                           'src' . DIRECTORY_SEPARATOR .
-                          $className .
+                          $className) .
                           '.php';
         if ((file_exists($classFilePath) === false) || (is_readable($classFilePath) === false)) {
             // Can't load
