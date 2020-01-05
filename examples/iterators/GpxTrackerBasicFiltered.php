@@ -12,11 +12,7 @@ $gpxFilename = __DIR__ . '/../../data/Roman_2015-11-23.gpx';
 $gpxReader = new GpxReader\GpxHandler($gpxFilename);
 
 
-// Define the date/time filter parameters
-$startTime = new DateTime('2015-11-23 13:20:00Z');
-$endTime = new DateTime('2015-11-23 13:30:00Z');
-
-class DateRangeFilter extends FilterIterator
+class DateTimeRangeFilter extends FilterIterator
 {
     private $startTime;
     private $endTime;
@@ -37,8 +33,12 @@ class DateRangeFilter extends FilterIterator
 }
 
 
+// Define the date/time filter parameters
+$startTime = new DateTime('2015-11-23 13:20:00Z');
+$endTime = new DateTime('2015-11-23 13:30:00Z');
+
 // Iterate over the trackpoint set from the gpx file, displaying each point detail in turn
-foreach (new DateRangeFilter($gpxReader->getElements('trkpt'), $startTime, $endTime)
+foreach (new DateTimeRangeFilter($gpxReader->getElements('trkpt'), $startTime, $endTime)
          as $time => $element) {
     printf(
         '%s' . PHP_EOL . '    latitude: %7.4f longitude: %7.4f elevation: %d' . PHP_EOL,

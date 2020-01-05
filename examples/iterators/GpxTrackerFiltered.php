@@ -15,8 +15,9 @@ $gpxReader = new GpxReader\GpxHandler($gpxFilename);
 // Define the date/time filter parameters
 $startTime = new DateTime('2015-11-23 13:20:00Z');
 $endTime = new DateTime('2015-11-23 13:30:00Z');
+
 // Create the filter callback with the date/time parameters we've just defined
-$timeFilter = function($value, $timestamp, $iterator) use ($startTime, $endTime) {
+$timeFilter = function(\GpxReader\GpxElement $element, DateTime $timestamp) use ($startTime, $endTime) {
     return $timestamp >= $startTime && $timestamp <= $endTime;
 };
 
