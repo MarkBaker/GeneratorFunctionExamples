@@ -31,12 +31,29 @@ class DistanceMapper extends IteratorIterator {
 $distanceCalculator = new GpxReader\Helpers\DistanceCalculator();
 
 // Iterate over the trackpoint set from the gpx file, mapping the distances as we go, displaying each point detail in turn
+
+$startTime = $endTime = null;
 $totalDistance = 0.0;
 foreach (new DistanceMapper($gpxReader->getElements('trkpt'), $distanceCalculator) as $time => $element) {
+    if ($startTime === null) {
+        $startTime = $time;
+    }
+    $endTime = $time;
     $totalDistance += $element->distance;
 }
+$secondsDuration = $endTime->getTimeStamp() - $startTime->getTimeStamp();
+$duration = $startTime->diff($endTime);
 
 printf(
     'Total distance walked:  %5.2f m' . PHP_EOL,
     $totalDistance
+);
+printf(
+    'In %d hours and %d minutes' . PHP_EOL,
+    $duration->h,
+    $duration->i
+);
+printf(
+    'Average Speed was:  %5.2f m/s' . PHP_EOL,
+    $totalDistance / $secondsDuration
 );
